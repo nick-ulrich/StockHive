@@ -1,0 +1,139 @@
+/*
+
+COLORS
+
+BACKGROUND COLOR: #fcde67
+CARD BACKGROUND: #ffffff
+FONT: #272727;
+ACCENT: ##4484ce;
+ACCENT2: #b1b1b1;
+
+GROWTH: #1cb84b
+DIP: #fd4949
+
+FONT
+
+Primary: Open Sans
+
+*/
+
+/* REUSABLE */
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.font {
+  font-family: Open Sans;
+  font-size: 1.5rem;
+  color: #272727;
+}
+
+/* START */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  background-color: #f1f1f1;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+/* START */
+
+.header {
+  padding: 2.5rem;
+  background-color: rgb(42 48 56);
+}
+
+.header h2 {
+  color: #f1f1f1;
+}
+
+.main {
+  grid-template-columns: 0.5fr 1.5fr;
+}
+
+/* STOCK LIST SIDE PANEL */
+
+.stock-list_container {
+  background-color: #e6f7ff;
+  border-radius: 0 0 0 5px;
+}
+
+.stock-list {
+  list-style: none;
+  padding: 2.5rem;
+}
+
+/* STOCK CHART HEADER */
+
+.chart-header {
+  justify-content: space-around;
+}
+
+/* STOCK CHART */
+
+.stock-chart_container {
+  margin: 2.5rem 0;
+}
+
+.stock-data_container {
+  padding: 2.5rem;
+}
+
+.stock-chart {
+  max-width: 100%;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+/* STOCK STATS */
+
+.data_container {
+  justify-content: space-around;
+}
+
+.data_container article {
+  width: 15rem;
+  height: 12rem;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+  border-style: solid;
+  border-color: #b1b1b1;
+  border-width: 1px;
+}
+
+.key-stat div {
+  margin: auto;
+}
+
+.key-stat-high {
+  color: #1cb84b;
+}
+.key-stat-low {
+  color: #fd4949;
+}
+
+.key-stat-high,
+.key-stat-low,
+.key-stat-volume {
+  font-size: 2rem;
+  font-weight: 700;
+}

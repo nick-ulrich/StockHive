@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header flex font">
+        <h2>StockHive</h2>
+        <input type="text" />
+      </header>
+      <main class="main grid">
+        <aside class="stock-list_container">
+          <ul class="stock-list">
+            <li>Apple</li>
+          </ul>
+        </aside>
+        <section class="stock-data_container">
+          <section class="chart-header flex font">
+            <h1 class="company-name"></h1>
+            <p class="company-symbol"></p>
+          </section>
+          <div class="stock-chart_container">
+            <h1 class="fetching-stock_msg"></h1>
+            <canvas class="stock-chart" id="stock-chart"></canvas>
+          </div>
+          <section class="data_container flex font">
+            <article class="key-stat flex">
+              <div>
+                <h3>High</h3>
+                <p class="key-stat-high">$137</p>
+              </div>
+            </article>
+            <article class="key-stat flex">
+              <div>
+                <h3>Low</h3>
+                <p class="key-stat-low">$137</p>
+              </div>
+            </article>
+            <article class="key-stat flex">
+              <div>
+                <h3>Volume</h3>
+                <p class="key-stat-volume">$137</p>
+              </div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="src/controller.js"></script>
+  </body>
+</html>
