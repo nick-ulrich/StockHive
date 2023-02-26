@@ -8,7 +8,7 @@ export const findCompany = async function (searchInput) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "schwab.p.rapidapi.com",
     },
   };
@@ -63,7 +63,7 @@ export const fetchStockData = async function (obj) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "twelve-data1.p.rapidapi.com",
     },
   };
