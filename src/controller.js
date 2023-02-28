@@ -1,6 +1,16 @@
 import * as Model from "./model.js";
+import view from "./view.js";
 // import * as renderChart from "./view.js";
 import renderedData from "./view.js";
+
+// store company data in an object to pass to other functions
+const companyObj = {
+  symbol: "",
+  title: "",
+  xAxis: "",
+  yAxis: "",
+  news: [],
+};
 
 const getCurrentDate = function () {
   // get current date
@@ -15,15 +25,21 @@ const getCurrentDate = function () {
 };
 
 const parseMovementsByTime = function (dataArr, timeFrame, date) {
+  console.log("timeFrame");
+  console.log(timeFrame);
+  console.log("dataArr");
+  console.log(dataArr);
+
   let daysArr = [];
   let openArr = [];
 
   switch (timeFrame) {
     // if user wants to see stock movements for today
-    case "1h":
+    case "now_button":
+      console.log("now_button FIRED");
       // filter out each object for today
       const results = dataArr.filter(
-        (mov) => mov.datetime.slice(0, 10) === "2023-02-24" //date
+        (mov) => mov.datetime.slice(0, 10) === "2023-02-27" //date
       );
 
       // times of day converted from military hours
@@ -40,7 +56,7 @@ const parseMovementsByTime = function (dataArr, timeFrame, date) {
       }
       return [daysArr, openArr];
     // if user wants to see stock movements for this week
-    case "week":
+    case "week_button":
       let w = 0;
 
       while (w < 7) {
@@ -52,7 +68,7 @@ const parseMovementsByTime = function (dataArr, timeFrame, date) {
 
       return [daysArr, openArr];
     // if user wants to see stock movements for past 30 days
-    case "1month":
+    case "month_button":
       let m = 0;
       while (m < 30) {
         // get past 30 days dates and openings
@@ -62,7 +78,7 @@ const parseMovementsByTime = function (dataArr, timeFrame, date) {
       }
       return [daysArr, openArr];
     // if user wants to see stock movements for past 3 months
-    case "3month":
+    case "three-month_button":
       let t = 0;
       while (t < 3) {
         // get past 3 months dates and openings
@@ -72,7 +88,7 @@ const parseMovementsByTime = function (dataArr, timeFrame, date) {
       }
       return [daysArr, openArr];
     // if user wants to see stock movements for past 6 months
-    case "6month":
+    case "six-month_button":
       let s = 0;
       while (s < 6) {
         // get past 3 months dates and openings
@@ -81,46 +97,53 @@ const parseMovementsByTime = function (dataArr, timeFrame, date) {
         s++;
       }
       return [daysArr, openArr];
+    case "ytd_button":
+      // get data for each month of this year
+      const todaysDate = getCurrentDate();
+      const year = todaysDate.slice(0, 4);
+
+      for (const obj of dataArr) {
+        if (obj.datetime.slice(0, 4) === year) {
+          // push months and opening data
+          daysArr.push(obj.datetime.slice(5, 7));
+          openArr.push(obj.open);
+        }
+      }
+      return [daysArr, openArr];
     default:
     // code block
   }
 };
 
-const getStockData = async function () {
-  const companyObj = {
-    symbol: "",
-    title: "",
-    xAxis: "",
-    yAxis: "",
-    news: [],
-  };
+const getData = async function (requestedTimeView, apiTimeSeries) {
+  // find company symbol when user uses search bar
+  const companyInfo = await Model.findCompany("apple inc");
 
-  const companyInfo = await Model.findCompany("microsoft");
+  // assign company symbol and name to companyObj
+  companyObj.symbol = companyInfo.symbol.slice(0, 4);
+  companyObj.title = companyInfo.name;
 
-  console.log(companyInfo);
-
-  const stockMoveArr = await Model.fetchStockData(companyInfo);
-
-  console.log(stockMoveArr);
+  // get and return stock movements
+  const stockMoveArr = await Model.fetchStockData(
+    companyObj.symbol,
+    apiTimeSeries
+  );
 
   const currentDate = getCurrentDate();
 
   // slice up data based on time frame requested (1day, 1month, 3month, etc.)
   const parseStockMoveArr = parseMovementsByTime(
     stockMoveArr,
-    "week",
+    requestedTimeView,
     currentDate
   );
 
-  companyObj.symbol = companyInfo.Symbol;
-  companyObj.title = companyInfo.CompanyName;
   companyObj.xAxis = parseStockMoveArr[0].reverse();
   companyObj.yAxis = parseStockMoveArr[1].reverse();
 
-  console.log(companyObj);
-
   renderedData.renderChart(companyObj);
   renderedData.updateHeader(companyObj);
+  renderedData.changeTimeSeries(getData);
 };
 
-getStockData();
+getData("now_button", "1h");
