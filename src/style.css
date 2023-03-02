@@ -58,11 +58,11 @@ html {
 
 .header {
   padding: 2.5rem;
-  background-color: rgb(42 48 56);
+  background-color: #fcde67;
 }
 
 .header h2 {
-  color: #f1f1f1;
+  color: #272727;
 }
 
 .main {
@@ -72,7 +72,7 @@ html {
 /* STOCK LIST SIDE PANEL */
 
 .stock-list_container {
-  background-color: #e6f7ff;
+  background-color: #fcde67;
   border-radius: 0 0 0 5px;
 }
 
@@ -85,6 +85,10 @@ html {
 
 .chart-header {
   justify-content: space-around;
+}
+
+.change-percent {
+  font-size: 10px;
 }
 
 /* STOCK CHART */
@@ -103,17 +107,26 @@ html {
   padding: 1.5rem;
 }
 
+/* TIME SERIES BUTTONS */
+
+.time-button_grid {
+  max-width: 70rem;
+  justify-content: space-between;
+  margin: auto;
+}
+
 /* STOCK STATS */
 
 .data_container {
-  justify-content: space-around;
+  max-width: 70rem;
+  margin: auto;
+  justify-content: space-between;
 }
 
 .data_container article {
   width: 15rem;
   height: 12rem;
   border-radius: 5px;
-  margin: auto;
   text-align: center;
   border-style: solid;
   border-color: #b1b1b1;
@@ -136,4 +149,13 @@ html {
 .key-stat-volume {
   font-size: 2rem;
   font-weight: 700;
+}
+.stats-grid {
+  max-width: 70rem;
+  margin: auto;
+  grid-template-columns: 1fr 1fr;
+  border-style: solid;
+  border-color: #b1b1b1;
+  border-width: 1px;
+  border-radius: 5px;
 }

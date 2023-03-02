@@ -24,41 +24,75 @@
         </aside>
         <section class="stock-data_container">
           <section class="chart-header flex font">
-            <h1 class="company-name"></h1>
-            <p class="company-symbol"></p>
+            <div class="flex">
+              <h1 class="company-name"></h1>
+              <h1 class="company-symbol"></h1>
+            </div>
+            <div class="flex">
+              <h1 class="company-price"></h1>
+              <h1 class="change-percent"></h1>
+            </div>
           </section>
           <div class="stock-chart_container">
-            <h1 class="fetching-stock_msg"></h1>
+            <h1 class="fetching-stock_msg font"></h1>
             <canvas class="stock-chart" id="stock-chart"></canvas>
           </div>
+          <section class="time-button_grid flex">
+            <button class="now_button" id="5D">now</button>
+            <button class="week_button" id="1M">week</button>
+            <button class="month_button" id="1M">month</button>
+            <button class="three-month_button" id="6M">3 month</button>
+            <button class="six-month_button" id="6M">6 month</button>
+            <button class="ytd_button" id="1Y">YTD</button>
+            <button class="year_button" id="1Y">1Y</button>
+            <button class="max_button" id="MAX">ALL</button>
+          </section>
           <section class="data_container flex font">
             <article class="key-stat flex">
               <div>
                 <h3>High</h3>
-                <p class="key-stat-high">$137</p>
+                <p class="key-stat-high"></p>
               </div>
             </article>
             <article class="key-stat flex">
               <div>
                 <h3>Low</h3>
-                <p class="key-stat-low">$137</p>
+                <p class="key-stat-low"></p>
               </div>
             </article>
             <article class="key-stat flex">
               <div>
                 <h3>Volume</h3>
-                <p class="key-stat-volume">$137</p>
+                <p class="key-stat-volume"></p>
               </div>
             </article>
           </section>
-          <section>
-            <button class="now_button" id="1h">now</button>
-            <button class="week_button" id="1day">week</button>
-            <button class="month_button" id="1day">month</button>
-            <button class="three-month_button" id="1month">3 month</button>
-            <button class="six-month_button" id="1month">6 month</button>
-            <button class="ytd_button" id="1month">YTD</button>
+          <section class="stats-grid grid">
+            <div>
+              <div class="flex">
+                <h3>Average Volume</h3>
+                <p class="avg-volume-stat"></p>
+              </div>
+              <div class="flex">
+                <h3>Market Cap</h3>
+                <p class="market-cap-stat"></p>
+              </div>
+            </div>
+            <div>
+              <div class="flex">
+                <h3>Div Yield</h3>
+                <p class="div-yield-stat"></p>
+              </div>
+              <div class="flex">
+                <h3>Market Cap</h3>
+                <p></p>
+              </div>
+            </div>
           </section>
+          <section class="company-about_container">
+            <p class="company-about_content font"></p>
+          </section>
+          <section class="company-news_container grid font"></section>
         </section>
       </main>
     </div>
