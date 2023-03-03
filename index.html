@@ -6,46 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
     </style>
   </head>
   <body>
-    <div class="container">
-      <header class="header flex font">
-        <h2>StockHive</h2>
-        <input type="text" />
-      </header>
-      <main class="main grid">
-        <aside class="stock-list_container">
-          <ul class="stock-list">
-            <li>Apple</li>
-          </ul>
-        </aside>
-        <section class="stock-data_container">
-          <section class="chart-header flex font">
-            <div class="flex">
-              <h1 class="company-name"></h1>
-              <h1 class="company-symbol"></h1>
-            </div>
-            <div class="flex">
-              <h1 class="company-price"></h1>
-              <h1 class="change-percent"></h1>
-            </div>
-          </section>
-          <div class="stock-chart_container">
+    <header class="header font">
+      <nav class="flex">
+        <h2>StockPortal</h2>
+        <span class="material-symbols-outlined"> trail_length_medium </span>
+        <input
+          type="text"
+          placeholder="&#x1F50D;&#xFE0E; Search for thousands of stocks"
+          class="search-input font"
+        />
+        <!-- <button class="search-button">Search</button> -->
+      </nav>
+    </header>
+    <div class="container main grid">
+      <section></section>
+      <section class="chart-header flex font">
+        <div class="chart-header-title flex">
+          <h1 class="company-name"></h1>
+          <p class="company-symbol"></p>
+        </div>
+        <div class="chart-header-price flex">
+          <h1 class="company-price"></h1>
+          <p class="change-percent"></p>
+        </div>
+      </section>
+      <aside class="stock-list_container">
+        <ul class="stock-list">
+          <li>Apple</li>
+        </ul>
+      </aside>
+      <main class="stock-data_container">
+        <section>
+          <div class="chart_container">
             <h1 class="fetching-stock_msg font"></h1>
             <canvas class="stock-chart" id="stock-chart"></canvas>
           </div>
           <section class="time-button_grid flex">
-            <button class="now_button" id="5D">now</button>
-            <button class="week_button" id="1M">week</button>
-            <button class="month_button" id="1M">month</button>
-            <button class="three-month_button" id="6M">3 month</button>
-            <button class="six-month_button" id="6M">6 month</button>
-            <button class="ytd_button" id="1Y">YTD</button>
-            <button class="year_button" id="1Y">1Y</button>
-            <button class="max_button" id="MAX">ALL</button>
+            <button class="now_button font" id="5D">Now</button>
+            <button class="week_button font" id="1M">Week</button>
+            <button class="month_button font" id="1M">Month</button>
+            <button class="three-month_button font" id="6M">3 Month</button>
+            <button class="six-month_button font" id="6M">6 Month</button>
+            <button class="ytd_button font" id="1Y">YTD</button>
+            <button class="year_button font" id="1Y">1Y</button>
+            <button class="max_button font" id="MAX">ALL</button>
           </section>
           <section class="data_container flex font">
             <article class="key-stat flex">
@@ -67,31 +80,29 @@
               </div>
             </article>
           </section>
-          <section class="stats-grid grid">
+          <section class="stats-grid font grid">
             <div>
-              <div class="flex">
+              <div class="stats-content flex">
                 <h3>Average Volume</h3>
                 <p class="avg-volume-stat"></p>
               </div>
-              <div class="flex">
+              <div class="stats-content flex">
                 <h3>Market Cap</h3>
                 <p class="market-cap-stat"></p>
               </div>
             </div>
             <div>
-              <div class="flex">
+              <div class="stats-content flex">
                 <h3>Div Yield</h3>
                 <p class="div-yield-stat"></p>
               </div>
-              <div class="flex">
-                <h3>Market Cap</h3>
-                <p></p>
+              <div class="stats-content flex">
+                <h3>CDP Score</h3>
+                <p class="cdp-score-stat"></p>
               </div>
             </div>
           </section>
-          <section class="company-about_container">
-            <p class="company-about_content font"></p>
-          </section>
+          <section class="company-about_container"></section>
           <section class="company-news_container grid font"></section>
         </section>
       </main>

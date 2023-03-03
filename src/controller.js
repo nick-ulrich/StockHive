@@ -29,6 +29,8 @@ const companyObj = {
   dividendYield: "",
   volume: "",
   averageVolume: "",
+  cdpScore: "",
+  currency: "",
   currentDate: "",
   currentMonth: "",
   website: "",
@@ -41,6 +43,7 @@ const companyObj = {
       this.apiTimeFrame
     );
     this.stockMoveArr = moveValues;
+    console.log(this);
     console.log(this.stockMoveArr);
   },
   renderChart: function () {
@@ -111,15 +114,19 @@ const companyObj = {
           (mov) => mov[0].slice(0, 10) === date //date
         );
 
+        console.log(results);
+
         // times of day converted from military hours
+        // and push to array
         for (let i = 0; i < results.length - 1; i++) {
           if (!Math.abs(i % 2) == 1) {
             const timeOfDay = results[i][0].slice(11, 13);
 
             if (Number(timeOfDay) > 12) {
               daysArr.push(Number(timeOfDay) - 12);
+              // daysArr.push(results[i][0].slice(11, 16));
             } else {
-              daysArr.push(Number(timeOfDay));
+              daysArr.push(results[i][0].slice(11, 13)); //change to 11,16 for :30
             }
             openArr.push(results[i][1].price);
           }
@@ -230,17 +237,22 @@ const getCurrentDate = function () {
   let year = today.getFullYear();
   let month = today.getMonth() + 1;
   let day = today.getDate();
+  let hours = today.getHours();
 
   year = year.toString();
   month = month.toString().padStart(2, "0");
   day = day.toString().padStart(2, "0");
 
-  return [month, `${year}-${month}-${day}`, year];
+  return [month, `${year}-${month}-${day}`, year, hours];
 };
 
-const getData = async function (requestedTimeView, apiTimeFrame) {
+const getData = async function (
+  requestedTimeView,
+  apiTimeFrame,
+  search = "nasdaq"
+) {
   // find company symbol when user uses search bar
-  const companySymbolRes = await Model.findCompany("nvidia");
+  const companySymbolRes = await Model.findCompany(search);
 
   // assign company symbol and name to companyObj
   companyObj.symbol = companySymbolRes.symbol; //.slice(0, 4);
@@ -257,7 +269,6 @@ const getData = async function (requestedTimeView, apiTimeFrame) {
 
   // assign info to company obj
   companyObj.title = companyProfile.data.name;
-  // companyObj.apiTimeFrame = apiTimeFrame;
   companyObj.exchange = companyProfile.data.exchange;
   companyObj.description = companyProfile.data.about;
   companyObj.ceo = companyProfile.data.company_ceo;
@@ -269,13 +280,24 @@ const getData = async function (requestedTimeView, apiTimeFrame) {
   companyObj.low = companyProfile.data.low;
   companyObj.marketCap = companyProfile.data.company_market_cap;
   companyObj.website = companyProfile.data.company_website;
-  companyObj.dividendYield = companyProfile.data.company_dividend_yield;
   companyObj.volume = companyProfile.data.volume;
   companyObj.averageVolume = companyProfile.data.avg_volume;
   companyObj.currentPrice = companyProfile.data.price;
   companyObj.change = companyProfile.data.change;
   companyObj.changePercent = companyProfile.data.change_percent;
   companyObj.news = companyNews.data.news;
+  companyObj.currency = companyNews.data.currency;
+  if (!companyProfile.data.company_dividend_yield) {
+    companyObj.dividendYield = "-";
+  } else {
+    companyObj.dividendYield = companyProfile.data.company_dividend_yield;
+  }
+
+  if (!companyProfile.data.company_cdp_score) {
+    companyObj.cdpScore = "-";
+  } else {
+    companyObj.cdpScore = companyProfile.data.company_cdp_score;
+  }
 
   await companyObj.updateAxis(requestedTimeView, apiTimeFrame);
   const currentDate = getCurrentDate();
@@ -300,6 +322,21 @@ const getData = async function (requestedTimeView, apiTimeFrame) {
   companyObj.updateCompanyDesc();
   companyObj.updateCompanyNews();
   renderedData.changeTimeSeries(companyObj);
+  renderedData.findNewStock(getData, companyObj);
 };
 
-getData("now_button", "5D");
+let timeIntOnLoad = "1D";
+
+// determine if it is currently before 10am
+const determineTimeInt = function () {
+  const currentTime = getCurrentDate();
+
+  // if it is currently 10am or later, set interval to 5D, else 1D
+  if (currentTime[3] >= 10) {
+    timeIntOnLoad = "5D";
+  }
+};
+
+determineTimeInt();
+
+getData("now_button", timeIntOnLoad);

@@ -7,7 +7,7 @@ export const findCompany = async function (searchInput) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -21,19 +21,19 @@ export const findCompany = async function (searchInput) {
     );
 
     if (!response.ok)
-      throw new Error(
-        "Oops! The worker bees could not find the company you're looking for. Please try again."
-      );
+      throw new Error("Oops! This portal led to a dead end. Please try again.");
 
     const data = await response.json();
 
     fetchingMessage.textContent = "";
 
-    console.log(data);
+    if (data.data.stock.length === 0)
+      throw new Error("Oops! This portal led to a dead end. Please try again.");
 
     return data.data.stock[0];
   } catch (err) {
     console.log(err);
+    fetchingMessage.textContent = `${err}`;
   }
 };
 
@@ -42,7 +42,7 @@ export const getCompanyProfile = async function (symbol, request) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -56,18 +56,15 @@ export const getCompanyProfile = async function (symbol, request) {
     );
 
     if (!response.ok)
-      throw new Error(
-        "Oops! The worker bees could not find the company information. Please try again."
-      );
+      throw new Error("Oops! This portal led to a dead end. Please try again.");
 
     const data = await response.json();
-
-    console.log(data);
 
     fetchingMessage.textContent = "";
     return data;
   } catch (err) {
     console.log(err);
+    fetchingMessage.textContent = `${err}`;
   }
 };
 
@@ -76,7 +73,7 @@ export const fetchStockData = async function (symbol, apiTimeFrame) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -91,19 +88,15 @@ export const fetchStockData = async function (symbol, apiTimeFrame) {
     );
 
     if (!response.ok)
-      throw new Error(
-        "Oops! The worker bees could not find the stock data you're looking for. Please try again."
-      );
+      throw new Error("Oops! This portal led to a dead end. Please try again.");
 
     const data = await response.json();
-
-    console.log(data);
 
     fetchingMessage.textContent = "";
 
     return data.data.time_series;
   } catch (err) {
     console.log(err);
-    fetchingMessage.textContent = err;
+    fetchingMessage.textContent = `${err}`;
   }
 };
