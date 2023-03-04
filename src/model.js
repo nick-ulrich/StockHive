@@ -1,13 +1,41 @@
 // import { API_URL } from "./config.js";
 
 const fetchingMessage = document.querySelector(".fetching-stock_msg");
+const fetchListMsg = document.querySelector(".fetching-stock-list_msg ");
+
+export const getMostActiveStocks = async function () {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Host": "yahoo-finance15.p.rapidapi.com",
+    },
+  };
+
+  try {
+    fetchListMsg.textContent = "Getting most active stocks...";
+
+    const response = await fetch(
+      "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers?start=0",
+      options
+    );
+
+    const data = await response.json();
+
+    fetchListMsg.textContent = "";
+
+    return data.quotes;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // get company ticker symbol on first load or based on users input
 export const findCompany = async function (searchInput) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "",
+      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -42,7 +70,7 @@ export const getCompanyProfile = async function (symbol, request) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "",
+      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -73,7 +101,7 @@ export const fetchStockData = async function (symbol, apiTimeFrame) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "",
+      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };

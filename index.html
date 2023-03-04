@@ -24,7 +24,6 @@
           placeholder="&#x1F50D;&#xFE0E; Search for thousands of stocks"
           class="search-input font"
         />
-        <!-- <button class="search-button">Search</button> -->
       </nav>
     </header>
     <div class="container main grid">
@@ -33,6 +32,7 @@
         <div class="chart-header-title flex">
           <h1 class="company-name"></h1>
           <p class="company-symbol"></p>
+          <p class="company-currency"></p>
         </div>
         <div class="chart-header-price flex">
           <h1 class="company-price"></h1>
@@ -40,9 +40,11 @@
         </div>
       </section>
       <aside class="stock-list_container">
-        <ul class="stock-list">
-          <li>Apple</li>
-        </ul>
+        <div class="stock-list_content">
+          <h1 class="font">Most Active</h1>
+          <p class="fetching-stock-list_msg font"></p>
+          <ul class="stock-list font"></ul>
+        </div>
       </aside>
       <main class="stock-data_container">
         <section>

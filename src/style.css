@@ -95,7 +95,12 @@ html {
 
 /* STOCK LIST PANEL */
 
-.stock-list_container {
+.stock-list_content h1 {
+  text-align: left;
+  padding: 2.5rem 0 0 2.5rem;
+}
+
+.stock-list_content {
   background-color: #222842;
   border-radius: 5px;
 }
@@ -105,10 +110,20 @@ html {
   padding: 2.5rem;
 }
 
+.stock-list_item {
+  justify-content: space-between;
+  padding: 2.5rem;
+}
+
+.fetching-stock-list_msg {
+  text-align: center;
+}
+
 /* STOCK CHART HEADER */
 
 .chart-header {
   justify-content: space-between;
+  height: 3.5rem;
   padding: 0 1.5rem;
 }
 
@@ -263,4 +278,8 @@ html {
   width: 20rem;
   height: 20rem;
   border-radius: 5px;
+}
+
+.company-news_link {
+  text-decoration: none;
 }

@@ -114,6 +114,7 @@ const companyObj = {
           (mov) => mov[0].slice(0, 10) === date //date
         );
 
+        console.log(destructedResults.reverse());
         console.log(results);
 
         // times of day converted from military hours
@@ -192,12 +193,14 @@ const companyObj = {
         destructedResults.reverse();
 
         const startYearObj = destructedResults[destructedResults.length - 1];
-        const startYear = destructedResults[
-          destructedResults.length - 1
-        ][0].slice(0, 4);
+        const startYear = startYearObj[0].slice(0, 4);
+
+        console.log(startYear);
 
         const numOfDecades = (+this.currentYear - +startYear) / 5;
         const yearsArr = [+this.currentYear];
+
+        console.log(numOfDecades);
 
         let r = 1;
 
@@ -209,6 +212,7 @@ const companyObj = {
         for (let i = 0; i < yearsArr.length; i++) {
           for (const yrObj of destructedResults) {
             if (yrObj[0].slice(0, 4) == yearsArr[i]) {
+              console.log(yrObj);
               daysArr.push(yrObj[0].slice(0, 4));
               openArr.push(yrObj[1].price);
               break;
@@ -216,7 +220,9 @@ const companyObj = {
           }
         }
 
-        daysArr.push(startYearObj[0].slice(0, 4));
+        if (daysArr.at(-1).slice(0, 4) !== startYear) {
+          daysArr.push(startYearObj[0].slice(0, 4));
+        }
         openArr.push(startYearObj[1].price);
 
         console.log(daysArr);
@@ -286,11 +292,13 @@ const getData = async function (
   companyObj.change = companyProfile.data.change;
   companyObj.changePercent = companyProfile.data.change_percent;
   companyObj.news = companyNews.data.news;
-  companyObj.currency = companyNews.data.currency;
+  companyObj.currency = companyProfile.data.currency;
   if (!companyProfile.data.company_dividend_yield) {
     companyObj.dividendYield = "-";
   } else {
-    companyObj.dividendYield = companyProfile.data.company_dividend_yield;
+    companyObj.dividendYield = `${parseFloat(
+      companyProfile.data.company_dividend_yield
+    ).toFixed(2)}%`;
   }
 
   if (!companyProfile.data.company_cdp_score) {
@@ -336,6 +344,13 @@ const determineTimeInt = function () {
     timeIntOnLoad = "5D";
   }
 };
+
+const getMostActive = async function () {
+  const mostActiveArr = await Model.getMostActiveStocks();
+  renderedData.displayMostActive(mostActiveArr);
+};
+
+getMostActive();
 
 determineTimeInt();
 

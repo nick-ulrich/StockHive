@@ -4,6 +4,7 @@ class renderedData {
   myChartContainer = document.getElementById("stock-chart");
   companyName = document.querySelector(".company-name");
   companySymbol = document.querySelector(".company-symbol");
+  companyCurrency = document.querySelector(".company-currency");
   currentPrice = document.querySelector(".company-price");
   changePer = document.querySelector(".change-percent");
   nowButton = document.querySelector(".now_button");
@@ -15,7 +16,6 @@ class renderedData {
   yearButton = document.querySelector(".year_button");
   maxButton = document.querySelector(".max_button");
   searchField = document.querySelector(".search-input");
-  // searchButton = document.querySelector(".search-button");
 
   highStat = document.querySelector(".key-stat-high");
   lowStat = document.querySelector(".key-stat-low");
@@ -27,6 +27,7 @@ class renderedData {
   companyAbout = document.querySelector(".company-about_container");
   companyAboutTitle = document.querySelector(".company-about_title");
   companyNews = document.querySelector(".company-news_container");
+  stockListContainer = document.querySelector(".stock-list");
   stockChart;
 
   constructor() {}
@@ -72,25 +73,36 @@ class renderedData {
   updateHeader(obj) {
     this.companyName.textContent = `${obj.title}`;
     this.companySymbol.textContent = `${obj.symbol}`;
-    this.currentPrice.textContent = `${obj.currentPrice}`;
+
+    if (obj.currency) {
+      this.companyCurrency.innerHTML = `&#xb7;&nbsp;&nbsp;&nbsp;${obj.currency}`;
+    }
+
+    this.currentPrice.textContent = `${parseFloat(obj.currentPrice)
+      .toFixed(2)
+      .toLocaleString()}`;
 
     if (Number(obj.change) < 0) {
-      this.changePer.textContent = `${obj.changePercent}%`;
+      this.changePer.textContent = `${parseFloat(obj.changePercent).toFixed(
+        2
+      )}%`;
       this.changePer.style.color = "#fd4949";
     } else {
-      this.changePer.textContent = `+ ${obj.changePercent}%`;
+      this.changePer.textContent = `+ ${parseFloat(obj.changePercent).toFixed(
+        2
+      )}%`;
       this.changePer.style.color = "#1ca1c0";
     }
   }
   updateHeaderStats(obj) {
     this.highStat.textContent = `${obj.high}`;
     this.lowStat.textContent = `${obj.low}`;
-    this.volumeStat.textContent = `${obj.volume}`;
+    this.volumeStat.textContent = `${obj.volume.toLocaleString()}`;
   }
   updateStats(obj) {
-    this.avgVolumeStat.textContent = `${obj.averageVolume}`;
-    this.marketCapStat.textContent = `${obj.marketCap}`;
-    this.divYieldStat.textContent = `${obj.dividendYield}%`;
+    this.avgVolumeStat.textContent = `${obj.averageVolume.toLocaleString()}`;
+    this.marketCapStat.textContent = `${obj.marketCap.toLocaleString()}`;
+    this.divYieldStat.textContent = `${obj.dividendYield}`;
     this.cdpScoreStat.textContent = `${obj.cdpScore}`;
   }
   updateCompanyDesc(obj) {
@@ -99,20 +111,29 @@ class renderedData {
 
     if (obj.description) {
       const html = `
-        <h1 class="company-about_title font">About</h1>
-        <p class="company-about_content font">&nbsp;&nbsp;&nbsp;&nbsp;${obj.description}</p>
-        <div class="company-about_details font flex">
-          <div class="detail flex">
+      <h1 class="company-about_title font">About</h1>
+      <p class="company-about_content font">&nbsp;&nbsp;&nbsp;&nbsp;${obj.description}</p>
+      `;
+
+      this.companyAbout.insertAdjacentHTML("beforeend", html);
+    } else {
+      this.companyAbout.style.display = "none";
+    }
+
+    if (obj.ceo && obj.country) {
+      const html2 = `
+        <div class="company-about_details flex">
+          <div class="font detail flex">
             <p>CEO&nbsp;</p>
             <h3>${obj.ceo}</h3>
           </div>
-          <div class="detail flex">
+          <div class="font detail flex">
             <p>Location&nbsp;</p>
             <h3>${obj.city}, ${obj.country}</h3>
           </div>
         </div>`;
 
-      this.companyAbout.insertAdjacentHTML("afterbegin", html);
+      this.companyAbout.insertAdjacentHTML("beforeend", html2);
     }
 
     // this.companyAboutTitle.textContent = `About ${obj.title}`;
@@ -126,13 +147,15 @@ class renderedData {
 
     while (i < 6) {
       const html = `
+      <a href="${newsObj[i].article_url}" class="company-news_link" target="_blank">
         <div class="company-news_content flex font">
           <img src="${newsObj[i].article_photo_url}" alt="" class="company-news_img">
           <div class="company-news">
             <p>${newsObj[i].source}</p>
             <h3>${newsObj[i].article_title}</h3>
           </div>
-        </div>`;
+        </div>
+        </a>`;
       i++;
       this.companyNews.insertAdjacentHTML("afterbegin", html);
     }
@@ -175,6 +198,26 @@ class renderedData {
         this.searchField.value = "";
       }
     });
+  }
+  displayMostActive(arr) {
+    arr.reverse();
+
+    let i = -10;
+
+    while (i < 0) {
+      const html = `
+      <li class="stock-list_item flex">
+        <div>
+        ${arr.at(i).symbol}
+        </div>
+        <div>
+        ${parseFloat(arr.at(i).regularMarketChangePercent).toFixed(2)}%
+        </div>
+      </li>
+    `;
+      this.stockListContainer.insertAdjacentHTML("afterbegin", html);
+      i++;
+    }
   }
 }
 
