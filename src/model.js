@@ -5,7 +5,7 @@ export const getMostActiveStocks = async function () {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "yahoo-finance15.p.rapidapi.com",
     },
   };
@@ -33,7 +33,7 @@ export const findCompany = async function (searchInput) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -68,7 +68,7 @@ export const getCompanyProfile = async function (symbol, request) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
@@ -99,7 +99,7 @@ export const fetchStockData = async function (symbol, apiTimeFrame) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "e33a7c8d4fmsh4e62d8ff85f954dp128d21jsne2ab30bef40d",
+      "X-RapidAPI-Key": "",
       "X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com",
     },
   };
