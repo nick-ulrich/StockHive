@@ -58,7 +58,7 @@ export const findCompany = async function (searchInput) {
 
     return data.data.stock[0];
   } catch (err) {
-    console.log(err);
+    console.error(err);
     fetchingMessage.textContent = `${err}`;
   }
 };
@@ -89,7 +89,7 @@ export const getCompanyProfile = async function (symbol, request) {
     fetchingMessage.textContent = "";
     return data;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     fetchingMessage.textContent = `${err}`;
   }
 };
@@ -122,7 +122,7 @@ export const fetchStockData = async function (symbol, apiTimeFrame) {
 
     return data.data.time_series;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     fetchingMessage.textContent = `${err}`;
   }
 };
