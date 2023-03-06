@@ -1,4 +1,4 @@
-import * as Model from "./model.js";
+import * as Model from "./model1.js";
 import renderedData from "./view.js";
 
 // store company data in an object to pass to other functions
