@@ -32,6 +32,11 @@ class renderedData {
 
   constructor() {}
   renderChart(obj) {
+    if (this.stockChart) {
+      this.stockChart.destroy();
+      this.stockChart;
+    }
+
     this.myChartContainer.style.backgroundColor = "#222842";
 
     Chart.defaults.elements.point.pointStyle = false;
@@ -54,6 +59,7 @@ class renderedData {
       options: {
         plugins: {
           legend: {
+            display: false,
             labels: {
               font: {
                 size: 0,
@@ -148,7 +154,7 @@ class renderedData {
     while (i < 6) {
       const html = `
       <a href="${newsObj[i].article_url}" class="company-news_link" target="_blank">
-        <div class="company-news_content flex font">
+        <div class="company-news_content grid font">
           <img src="${newsObj[i].article_photo_url}" alt="" class="company-news_img">
           <div class="company-news">
             <p>${newsObj[i].source}</p>
@@ -174,15 +180,10 @@ class renderedData {
 
     const newArr = buttonsArr.map((button) => {
       button.addEventListener("click", async (e) => {
-        console.log(e.target.classList[0]);
-        console.log(e.target.id);
         this.stockChart.destroy();
+        this.stockChart;
         await obj.updateAxis(e.target.classList[0], e.target.id);
-        obj.parseMovementsByTime(
-          e.target.classList[0],
-          obj.currentDate,
-          obj.currentMonth
-        );
+        obj.parseMovementsByTime(e.target.classList[0], obj.currentMonth);
         obj.renderChart();
       });
     });
@@ -194,6 +195,7 @@ class renderedData {
 
         func("now_button", "5D", searchFieldValue);
         this.stockChart.destroy();
+        this.stockChart;
 
         this.searchField.value = "";
       }

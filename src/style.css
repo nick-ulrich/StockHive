@@ -1,19 +1,10 @@
 /*
 
-COLORS
-
-BACKGROUND COLOR: #fcde67
-CARD BACKGROUND: #ffffff
+BACKGROUND COLOR: #16192a;
+CARD BACKGROUND: #222842;
 FONT: #e9ebee;
-ACCENT: ##;
-ACCENT2: #;
-
-GROWTH: #
+ACCENT: #1ca1c0;
 DIP: #fd4949
-
-FONT
-
-Primary: Open Sans
 
 */
 
@@ -49,6 +40,7 @@ html {
 .container {
   max-width: 120rem;
   margin: 2.5rem auto;
+  padding: 0 2.5rem;
   position: relative;
   border-radius: 5px;
   background-color: #16192a;
@@ -72,7 +64,7 @@ html {
 }
 
 .search-input {
-  width: 40rem;
+  width: 70rem;
   background-color: #101322;
   border: none;
   padding-left: 1.5rem;
@@ -97,22 +89,22 @@ html {
 
 .stock-list_content h1 {
   text-align: left;
-  padding: 2.5rem 0 0 2.5rem;
+  padding: 1.5rem 0;
 }
 
 .stock-list_content {
   background-color: #222842;
   border-radius: 5px;
+  padding: 1.5rem;
 }
 
 .stock-list {
   list-style: none;
-  padding: 2.5rem;
 }
 
 .stock-list_item {
   justify-content: space-between;
-  padding: 2.5rem;
+  padding: 1.5rem 0;
 }
 
 .fetching-stock-list_msg {
@@ -123,7 +115,7 @@ html {
 
 .chart-header {
   justify-content: space-between;
-  height: 3.5rem;
+  /* height: 3.5rem; */
   padding: 0 1.5rem;
 }
 
@@ -139,6 +131,10 @@ html {
 
 /* STOCK CHART */
 
+.stock-data_container {
+  width: 100%;
+}
+
 .chart_container {
   position: relative;
 }
@@ -149,12 +145,9 @@ html {
   left: 40%;
 }
 
-/* .stock-data_container {
-  padding: 2.5rem;
-} */
-
 .stock-chart {
   width: 100% !important;
+  height: 100% !important;
   margin: auto;
   border-radius: 5px;
   padding: 1.5rem;
@@ -163,8 +156,8 @@ html {
 /* TIME SERIES BUTTONS */
 
 .time-button_grid {
-  max-width: 70rem;
-  justify-content: space-between;
+  width: 100%;
+  grid-template-columns: repeat(8, 1fr);
   margin: auto;
   padding: 2.5rem 0;
 }
@@ -185,6 +178,7 @@ html {
 .data_container {
   max-width: 70rem;
   margin: auto;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
 }
 
@@ -259,6 +253,7 @@ html {
 }
 
 .company-news_content {
+  grid-template-columns: 0.5fr 1fr;
   background-color: #222842;
   padding: 1.5rem;
   border-radius: 5px;
@@ -282,4 +277,81 @@ html {
 
 .company-news_link {
   text-decoration: none;
+}
+
+/* ///////////// */
+/* MEDIA QUERIES */
+/* ///////////// */
+
+@media (max-width: 40em) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .header nav {
+    display: block;
+    margin: auto;
+  }
+
+  .logo,
+  .input {
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 25rem;
+    padding: 1rem 0;
+  }
+
+  .stock-list_container,
+  .top-stock-list {
+    display: none;
+  }
+
+  .chart-header,
+  .company-about_details {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+
+  .chart-header-price {
+    padding-top: 1.5rem;
+  }
+
+  .company-name,
+  .company-symbol,
+  .company-currency,
+  .company-price,
+  .change-percent {
+    margin: auto;
+  }
+
+  .detail {
+    justify-content: center;
+    padding: 1.5rem 0;
+  }
+
+  .data_container {
+    gap: 2.5rem;
+  }
+
+  .data_container,
+  .company-news_content {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .time-button_grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .time-button_grid div {
+    justify-content: space-between;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }

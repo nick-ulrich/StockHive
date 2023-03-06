@@ -1,7 +1,5 @@
-//import { throws } from "assert/strict";
 import * as Model from "./model.js";
 import view from "./view.js";
-// import * as renderChart from "./view.js";
 import renderedData from "./view.js";
 
 // store company data in an object to pass to other functions
@@ -43,8 +41,6 @@ const companyObj = {
       this.apiTimeFrame
     );
     this.stockMoveArr = moveValues;
-    console.log(this);
-    console.log(this.stockMoveArr);
   },
   renderChart: function () {
     renderedData.renderChart(companyObj);
@@ -65,7 +61,7 @@ const companyObj = {
     renderedData.updateCompanyNews(companyObj.news);
   },
   // slice up data based on time frame requested (1day, 1month, 3month, etc.)
-  parseMovementsByTime: function (timeFrame, date, month, year) {
+  parseMovementsByTime: function (timeFrame, month) {
     let daysArr = [];
     let openArr = [];
 
@@ -109,25 +105,28 @@ const companyObj = {
     switch (timeFrame) {
       // if user wants to see stock movements for today
       case "now_button":
-        // filter out only today
+        // get most recent day
+        destructedResults.reverse();
+
+        const recentDate = destructedResults[0][0].slice(0, 10);
+
+        // filter out days based on recentDate
         const results = destructedResults.filter(
-          (mov) => mov[0].slice(0, 10) === date //date
+          (mov) => mov[0].slice(0, 10) === recentDate
         );
 
-        console.log(destructedResults.reverse());
-        console.log(results);
+        results.reverse();
 
         // times of day converted from military hours
         // and push to array
-        for (let i = 0; i < results.length - 1; i++) {
+        for (let i = 0; i < results.length; i++) {
           if (!Math.abs(i % 2) == 1) {
             const timeOfDay = results[i][0].slice(11, 13);
 
             if (Number(timeOfDay) > 12) {
               daysArr.push(Number(timeOfDay) - 12);
-              // daysArr.push(results[i][0].slice(11, 16));
             } else {
-              daysArr.push(results[i][0].slice(11, 13)); //change to 11,16 for :30
+              daysArr.push(results[i][0].slice(11, 16));
             }
             openArr.push(results[i][1].price);
           }
@@ -195,24 +194,21 @@ const companyObj = {
         const startYearObj = destructedResults[destructedResults.length - 1];
         const startYear = startYearObj[0].slice(0, 4);
 
-        console.log(startYear);
-
-        const numOfDecades = (+this.currentYear - +startYear) / 5;
+        const numOfHalfDecades = (+this.currentYear - +startYear) / 5;
         const yearsArr = [+this.currentYear];
-
-        console.log(numOfDecades);
 
         let r = 1;
 
-        while (r < numOfDecades + 1) {
+        // get every 5th year and push it to yearsArr
+        while (r < numOfHalfDecades + 1) {
           yearsArr.push(+this.currentYear - 5 * r);
           r++;
         }
 
+        // loop through all years, if yr = yr in arr,
         for (let i = 0; i < yearsArr.length; i++) {
           for (const yrObj of destructedResults) {
             if (yrObj[0].slice(0, 4) == yearsArr[i]) {
-              console.log(yrObj);
               daysArr.push(yrObj[0].slice(0, 4));
               openArr.push(yrObj[1].price);
               break;
@@ -222,11 +218,8 @@ const companyObj = {
 
         if (daysArr.at(-1).slice(0, 4) !== startYear) {
           daysArr.push(startYearObj[0].slice(0, 4));
+          openArr.push(startYearObj[1].price);
         }
-        openArr.push(startYearObj[1].price);
-
-        console.log(daysArr);
-        console.log(openArr);
 
         this.xAxis = daysArr.reverse();
         this.yAxis = openArr.reverse();
@@ -261,7 +254,7 @@ const getData = async function (
   const companySymbolRes = await Model.findCompany(search);
 
   // assign company symbol and name to companyObj
-  companyObj.symbol = companySymbolRes.symbol; //.slice(0, 4);
+  companyObj.symbol = companySymbolRes.symbol;
 
   const companyProfile = await Model.getCompanyProfile(
     companyObj.symbol,
@@ -314,14 +307,7 @@ const getData = async function (
   companyObj.currentMonth = currentDate[0];
   companyObj.currentYear = currentDate[2];
 
-  companyObj.parseMovementsByTime(
-    requestedTimeView,
-    currentDate[1],
-    currentDate[0],
-    currentDate[2]
-  );
-
-  console.log(companyObj);
+  companyObj.parseMovementsByTime(requestedTimeView, currentDate[0]);
 
   companyObj.renderChart();
   companyObj.updateHeader();
@@ -329,7 +315,6 @@ const getData = async function (
   companyObj.updateStats();
   companyObj.updateCompanyDesc();
   companyObj.updateCompanyNews();
-  renderedData.changeTimeSeries(companyObj);
   renderedData.findNewStock(getData, companyObj);
 };
 
@@ -350,8 +335,15 @@ const getMostActive = async function () {
   renderedData.displayMostActive(mostActiveArr);
 };
 
+// add event listeners to time series buttons
+const setEventListToTime = function () {
+  renderedData.changeTimeSeries(companyObj);
+};
+
 getMostActive();
 
 determineTimeInt();
 
 getData("now_button", timeIntOnLoad);
+
+setEventListToTime();

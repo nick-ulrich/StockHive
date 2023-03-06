@@ -1,5 +1,3 @@
-// import { API_URL } from "./config.js";
-
 const fetchingMessage = document.querySelector(".fetching-stock_msg");
 const fetchListMsg = document.querySelector(".fetching-stock-list_msg ");
 
